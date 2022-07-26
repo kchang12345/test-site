@@ -16,7 +16,7 @@ import {
   useLoaderData,
   useLocation,
 } from "@remix-run/react";
-import tailwind from "./tailwind.css";
+import tailwind from "~/tailwind.css";
 import { useEffect } from "react";
 
 import * as gtag from "~/utils/gtags.client";
