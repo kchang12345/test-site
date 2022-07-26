@@ -64,8 +64,6 @@ export default function App() {
     }
   }, [location, gaTrackingId]);
 
-  console.log(`Tracking id is ${gaTrackingId}`);
-
   return (
     <html lang="en">
       <head>
