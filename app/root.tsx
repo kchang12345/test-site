@@ -64,6 +64,8 @@ export default function App() {
     }
   }, [location, gaTrackingId]);
 
+  console.log(`Tracking id is ${gaTrackingId}`);
+
   return (
     <html lang="en">
       <head>
@@ -71,7 +73,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        {process.env.NODE_ENV === "development" || !gaTrackingId ? null : (
+        {!gaTrackingId ? null : (
           <>
             <script
               async
