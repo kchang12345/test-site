@@ -20,6 +20,7 @@ import { useEffect } from "react";
 
 import * as gtag from "~/utils/gtags.client";
 import * as FullStory from "@fullstory/browser";
+import mixpanel from "mixpanel-browser";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
@@ -45,6 +46,7 @@ type LoaderData = {
   hotjarTrackingId: string | undefined;
   fullstoryOrgId: string | undefined;
   pendoId: string | undefined;
+  mixpanelToken: string | undefined;
 };
 
 // Load tracking ids from the .env
@@ -55,6 +57,7 @@ export const loader: LoaderFunction = async () => {
     hotjarTrackingId: process.env.HOTJAR_TRACKING_ID,
     fullstoryOrgId: process.env.FULLSTORY_ORG_ID,
     pendoId: process.env.PENDO_ID,
+    mixpanelToken: process.env.MIXPANEL_TOKEN,
   });
 };
 
@@ -72,6 +75,7 @@ export default function App() {
     hotjarTrackingId,
     fullstoryOrgId,
     pendoId,
+    mixpanelToken,
   } = useLoaderData<LoaderData>();
 
   useEffect(() => {
@@ -82,6 +86,10 @@ export default function App() {
 
   if (fullstoryOrgId && typeof window !== "undefined") {
     FullStory.init({ orgId: fullstoryOrgId });
+  }
+
+  if (mixpanelToken) {
+    mixpanel.init(mixpanelToken, { debug: true });
   }
 
   return (

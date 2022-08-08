@@ -12,14 +12,12 @@ import * as FullStory from "@fullstory/browser";
 type LoaderData = {
   gaTrackingId: string | undefined;
   amplitudeTrackingId: string | undefined;
-  mixpanelToken: string | undefined;
 };
 
 export const loader: LoaderFunction = async () => {
   return json<LoaderData>({
     gaTrackingId: process.env.GA_TRACKING_ID,
     amplitudeTrackingId: process.env.AMPLITUDE_TRACKING_ID,
-    mixpanelToken: process.env.MIXPANEL_TOKEN,
   });
 };
 
@@ -28,14 +26,10 @@ export const action: ActionFunction = () => {
 };
 
 export default function Contact() {
-  const { amplitudeTrackingId, mixpanelToken } = useLoaderData<LoaderData>();
+  const { amplitudeTrackingId } = useLoaderData<LoaderData>();
 
   if (amplitudeTrackingId) {
     amplitude.init(amplitudeTrackingId);
-  }
-
-  if (mixpanelToken) {
-    mixpanel.init(mixpanelToken, { debug: true });
   }
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
