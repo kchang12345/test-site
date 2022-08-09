@@ -95,10 +95,6 @@ export default function App() {
     mixpanel.init(mixpanelToken, { debug: true });
   }
 
-  // if (taplyticsKey) {
-  //   Taplytics.init(taplyticsKey);
-  // }
-
   return (
     <html lang="en">
       <head>
