@@ -47,6 +47,7 @@ type LoaderData = {
   fullstoryOrgId: string | undefined;
   pendoId: string | undefined;
   mixpanelToken: string | undefined;
+  taplyticsKey: string | undefined;
 };
 
 // Load tracking ids from the .env
@@ -58,6 +59,7 @@ export const loader: LoaderFunction = async () => {
     fullstoryOrgId: process.env.FULLSTORY_ORG_ID,
     pendoId: process.env.PENDO_ID,
     mixpanelToken: process.env.MIXPANEL_TOKEN,
+    taplyticsKey: process.env.TAPLYTICS_KEY,
   });
 };
 
@@ -76,6 +78,7 @@ export default function App() {
     fullstoryOrgId,
     pendoId,
     mixpanelToken,
+    taplyticsKey,
   } = useLoaderData<LoaderData>();
 
   useEffect(() => {
@@ -91,6 +94,10 @@ export default function App() {
   if (mixpanelToken) {
     mixpanel.init(mixpanelToken, { debug: true });
   }
+
+  // if (taplyticsKey) {
+  //   Taplytics.init(taplyticsKey);
+  // }
 
   return (
     <html lang="en">
@@ -216,6 +223,18 @@ export default function App() {
             }}
           />
         )}
+        {/* Taplytics */}
+        <script
+          async
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(){var t=window.Taplytics=window.Taplytics||[];if(window._tlq=window._tlq||[],!t.identify&&!t.loaded){t.loaded=!0,t.funcs=["init","identify","track","page","reset","propertiesLoaded","runningExperiments","variable","codeBlock"],t.mock=function(n){return function(){var e=Array.prototype.slice.call(arguments);return e.unshift(n),window._tlq.push(e),t}};for(var n=0;n<t.funcs.length;n++){var e=t.funcs[n];t[e]=t.mock(e)}t.load=function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="//cdn.taplytics.com/taplytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)},t.load()}}();
+
+              Taplytics.init("${taplyticsKey}");
+          `,
+          }}
+        />
 
         <header>
           <nav className="p-5">
